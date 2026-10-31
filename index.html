@@ -70,7 +70,7 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
       --focus: #8A4B3F;
     }
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; margin: 0; padding: 0; background: var(--bg); }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
     }
@@ -186,13 +186,18 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
     .site-header {
       position: sticky;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
       height: var(--header-h);
       display: flex;
       align-items: center;
       transition: height 200ms ease, background-color 200ms ease, border-color 200ms ease;
-      background: transparent;
+      background: var(--bg);
       border-bottom: 1px solid transparent;
+      margin: 0;
+      padding-top: env(safe-area-inset-top, 0px);
+      box-sizing: content-box;
     }
     .site-header.is-scrolled {
       height: 60px;
@@ -421,31 +426,7 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
       isolation: isolate;
       overflow: visible;
     }
-    /* Subtle paper grain — palette colours only, SVG noise */
-    .cake-stage::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 28px;
-      background:
-        radial-gradient(ellipse 80% 55% at 50% 78%, rgba(239,231,219,0.85) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 40% at 72% 18%, rgba(255,252,248,0.55) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.9;
-    }
-    .cake-stage::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 28px;
-      opacity: 0.035;
-      pointer-events: none;
-      z-index: 5;
-      mix-blend-mode: multiply;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 180px 180px;
-    }
+    /* Stage overlays removed — hero grain only (seamless) */
 
     .cake-glow {
       position: absolute;
@@ -794,16 +775,23 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
       .cake-whole { width: 60%; bottom: 6%; }
       .cake-viewport { inset: 0 0 20% 0; }
       .slice-card {
-        right: auto;
-        left: 50%;
-        top: auto;
-        bottom: 5%;
-        transform: translateX(-50%) translateY(8px) scale(0.96);
-        min-width: 10.5rem;
-        padding: 14px 16px 12px;
+        /* Clear of cake + pedestal stem: sit top-right beside the floating slice */
+        right: 0;
+        left: auto;
+        top: 2%;
+        bottom: auto;
+        transform: translateY(8px) scale(0.94);
+        min-width: 0;
+        width: max-content;
+        max-width: 42%;
+        padding: 10px 12px 9px;
+        gap: 2px;
       }
+      .slice-card-name { font-size: 1.15rem; }
+      .slice-card-kicker { font-size: 0.55rem; letter-spacing: 0.14em; }
+      .slice-card-cta { font-size: 0.7rem; margin-top: 4px; }
       .cake-stand.is-sliced .slice-card {
-        transform: translateX(-50%) translateY(0) scale(1);
+        transform: translateY(0) scale(1);
       }
       .cake-stand.is-sliced .cake-layer.is-active .cake-slice-float {
         transform: translate(46%, -34%) scale(0.95) rotate(9deg);
@@ -819,6 +807,13 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
       .cake-stand.is-sliced .cake-layer.is-active .cake-slice-float {
         transform: translate(40%, -28%) scale(0.88) rotate(8deg);
       }
+      .slice-card {
+        top: 1%;
+        right: 0;
+        max-width: 46%;
+        padding: 9px 11px 8px;
+      }
+      .slice-card-name { font-size: 1.05rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
