@@ -3,7 +3,7 @@
 TODO (unconfirmed — only place for this):
 Phone 03 9416 0091 · Email babkabakerycafe@gmail.com · IG @babkafitzroy
 Formspree: replace form action="#". Confirm holiday hours + Maps pin.
-Hero headlines: (1 IN USE) Cake by the slice, since 1993. | (2) Lemon tart and coffee on Brunswick Street. | (3) Whole cakes, mornings in Fitzroy.
+Hero: Cake stand — “Cake by the slice. Or the whole thing.” Signatures: lemon tart, Black Forest, pecan honey tart.
 Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg, almond-croissant.jpg, chocolate-croissant.jpg, danishes.jpg, shopfront.jpg, favicon.svg
 -->
 <html lang="en-AU">
@@ -314,31 +314,34 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
 
     /* Hero */
     .hero {
-      padding: clamp(48px, 8vw, 96px) 0 clamp(72px, 10vw, 120px);
+      padding: clamp(40px, 7vw, 88px) 0 clamp(56px, 9vw, 112px);
+      background: #F8F4EE;
     }
     .hero-grid {
       display: grid;
-      gap: 40px;
+      gap: 36px;
       align-items: center;
     }
     @media (min-width: 900px) {
       .hero-grid {
-        grid-template-columns: 1fr 1.05fr;
-        gap: 64px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+        gap: 48px 64px;
       }
     }
-    .hero-copy h1 { margin-bottom: 16px; }
+    .hero-copy h1 {
+      margin-bottom: 14px;
+      max-width: 11ch;
+    }
     .hero-copy .sub {
       color: var(--muted);
       font-size: 1.05rem;
-      max-width: 32rem;
       margin-bottom: 28px;
     }
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
     .status-row {
       display: flex;
@@ -364,24 +367,253 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
       border-radius: 50%;
       background: var(--muted);
     }
-    .badge.is-open .dot {
-      background: var(--green);
-    }
+    .badge.is-open .dot { background: var(--green); }
     @media (prefers-reduced-motion: no-preference) {
-      .badge.is-open .dot {
-        animation: pulse 2s ease-in-out infinite;
-      }
+      .badge.is-open .dot { animation: pulse 2s ease-in-out infinite; }
     }
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.55; transform: scale(0.85); }
     }
-    .hero-photo {
-      aspect-ratio: 4 / 5;
-      min-height: 320px;
+
+    /* ---- Cake stand ---- */
+    .cake-stand {
+      --stand-size: min(100%, 440px);
+      --slice-from: 67.5deg;
+      --slice-span: 45deg;
+      --slice-out: 16%;
+      --cake-rot: 0deg;
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      margin-inline: auto;
+      user-select: none;
+      touch-action: pan-y;
     }
     @media (min-width: 900px) {
-      .hero-photo { min-height: 520px; aspect-ratio: 5 / 6; }
+      .cake-stand { --stand-size: min(100%, 480px); justify-self: end; max-width: 560px; }
+    }
+    .cake-stage {
+      position: relative;
+      width: var(--stand-size);
+      aspect-ratio: 1;
+      margin-inline: auto;
+    }
+    .cake-plate {
+      position: absolute;
+      inset: 6%;
+      border-radius: 50%;
+      background: #EFE7DB;
+      box-shadow: 0 18px 40px rgba(43, 33, 28, 0.08);
+    }
+    .cake-viewport {
+      position: absolute;
+      inset: 8%;
+      border-radius: 50%;
+    }
+    .cake-layer {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    .cake-layer.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
+    .cake-body,
+    .cake-slice {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .cake-body {
+      -webkit-mask-image: conic-gradient(
+        from var(--slice-from) at 50% 50%,
+        transparent 0 var(--slice-span),
+        #000 var(--slice-span) 360deg
+      );
+      mask-image: conic-gradient(
+        from var(--slice-from) at 50% 50%,
+        transparent 0 var(--slice-span),
+        #000 var(--slice-span) 360deg
+      );
+    }
+    .cake-slice {
+      -webkit-mask-image: conic-gradient(
+        from var(--slice-from) at 50% 50%,
+        #000 0 var(--slice-span),
+        transparent var(--slice-span) 360deg
+      );
+      mask-image: conic-gradient(
+        from var(--slice-from) at 50% 50%,
+        #000 0 var(--slice-span),
+        transparent var(--slice-span) 360deg
+      );
+      transform: translate(0, 0);
+      transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* plate handles click/drag; avoids masked dead-zones */
+    }
+    .cake-viewport { cursor: grab; }
+    .cake-stand.is-dragging .cake-viewport { cursor: grabbing; }
+    .cake-stand.is-sliced .cake-slice {
+      transform: translate(var(--slice-out), 0);
+    }
+    .cake-spin {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      transform: rotate(var(--cake-rot));
+      will-change: transform;
+    }
+    .cake-spin img,
+    .cake-spin picture {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 50%;
+    }
+    .cake-spin img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .cake-stand.is-spinning:not(.is-dragging) .cake-layer.is-active .cake-spin {
+        animation: cake-idle-spin 48s linear infinite;
+      }
+    }
+    @keyframes cake-idle-spin {
+      from { transform: rotate(var(--cake-rot)); }
+      to { transform: rotate(calc(var(--cake-rot) + 360deg)); }
+    }
+    .slice-label {
+      position: absolute;
+      right: -2%;
+      top: 42%;
+      transform: translate(40%, -50%);
+      background: #fff;
+      border: 1px solid rgba(43, 33, 28, 0.08);
+      border-radius: 14px;
+      padding: 10px 14px;
+      box-shadow: 0 10px 28px rgba(43, 33, 28, 0.1);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 3;
+      text-align: left;
+      min-width: 7.5rem;
+    }
+    .cake-stand.is-sliced .slice-label {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(55%, -50%);
+    }
+    .slice-label-eyebrow {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .slice-label-name {
+      display: block;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .slice-label {
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      font: inherit;
+      color: inherit;
+      text-align: left;
+    }
+    .slice-label:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 3px;
+    }
+    .cake-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .cake-nav-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(43, 33, 28, 0.18);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .cake-nav-btn:hover { background: var(--surface); border-color: var(--accent); }
+    .cake-nav-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+    .cake-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .cake-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 0;
+      padding: 0;
+      background: rgba(43, 33, 28, 0.22);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .cake-dot[aria-current="true"] {
+      background: var(--accent);
+      transform: scale(1.25);
+    }
+    .cake-dot:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+    .cake-sr {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+    @media (max-width: 899px) {
+      .hero-grid { gap: 28px; }
+      .cake-stand { order: -1; --stand-size: min(92vw, 360px); }
+      .slice-label {
+        right: 0;
+        top: auto;
+        bottom: 4%;
+        left: 50%;
+        transform: translate(-50%, 20%);
+      }
+      .cake-stand.is-sliced .slice-label {
+        transform: translate(-50%, 10%);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cake-slice, .cake-layer, .slice-label { transition: none; }
+      .cake-stand.is-sliced .cake-slice { transform: translate(var(--slice-out), 0); }
     }
 
     /* Cake of the week */
@@ -870,12 +1102,11 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
   </div>
 
   <main>
-    <section class="hero">
+    <section class="hero" aria-label="Introduction">
       <div class="wrap hero-grid">
         <div class="hero-copy reveal">
-          <p class="eyebrow">Fitzroy · Since 1993</p>
-          <h1>Cake by the slice, since 1993.</h1>
-          <p class="sub">Whole cakes, tarts and coffee on Brunswick Street — a neighbourhood bakery for mornings and celebrations.</p>
+          <h1>Cake by the slice. Or the whole thing.</h1>
+          <p class="sub">Brunswick St, Fitzroy, since 1993.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#order">Order a cake <span class="arrow" aria-hidden="true">→</span></a>
             <a class="btn btn-outline" href="#visit">Visit us</a>
@@ -885,8 +1116,89 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
             <span>358 Brunswick St, Fitzroy VIC 3065</span>
           </div>
         </div>
-        <div class="photo hero-photo reveal" aria-hidden="false">
-          <img src="images/lemon-tart.jpg" alt="Lemon tart with short pastry and citrus curd" width="900" height="1080">
+
+        <div class="cake-stand is-sliced is-spinning" id="cake-stand" data-index="0">
+          <div class="cake-stage" aria-roledescription="carousel" aria-label="Signatures" id="cake-carousel">
+            <div class="cake-plate" id="cake-plate">
+              <div class="cake-viewport">
+                <!-- Lemon tart (first, eager) -->
+                <div class="cake-layer is-active" data-cake="Lemon tart" data-index="0">
+                  <div class="cake-body" aria-hidden="true">
+                    <div class="cake-spin">
+                      <picture>
+                        <source type="image/webp" srcset="images/stand-lemon.webp">
+                        <img src="images/stand-lemon.jpg" alt="" width="900" height="900" decoding="async">
+                      </picture>
+                    </div>
+                  </div>
+                  <button type="button" class="cake-slice" data-cake="Lemon tart" aria-label="Order Lemon tart">
+                    <div class="cake-spin">
+                      <picture>
+                        <source type="image/webp" srcset="images/stand-lemon.webp">
+                        <img src="images/stand-lemon.jpg" alt="" width="900" height="900" decoding="async">
+                      </picture>
+                    </div>
+                  </button>
+                </div>
+                <!-- Black Forest (lazy) -->
+                <div class="cake-layer" data-cake="Black Forest" data-index="1" hidden>
+                  <div class="cake-body" aria-hidden="true">
+                    <div class="cake-spin">
+                      <picture>
+                        <source type="image/webp" srcset="images/stand-black-forest.webp">
+                        <img src="images/stand-black-forest.jpg" alt="" width="900" height="900" loading="lazy" decoding="async" data-stand-lazy>
+                      </picture>
+                    </div>
+                  </div>
+                  <button type="button" class="cake-slice" data-cake="Black Forest" aria-label="Order Black Forest">
+                    <div class="cake-spin">
+                      <picture>
+                        <source type="image/webp" srcset="images/stand-black-forest.webp">
+                        <img src="images/stand-black-forest.jpg" alt="" width="900" height="900" loading="lazy" decoding="async" data-stand-lazy>
+                      </picture>
+                    </div>
+                  </button>
+                </div>
+                <!-- Pecan (lazy) -->
+                <div class="cake-layer" data-cake="Pecan &amp; honey tart" data-index="2" hidden>
+                  <div class="cake-body" aria-hidden="true">
+                    <div class="cake-spin">
+                      <picture>
+                        <source type="image/webp" srcset="images/stand-pecan.webp">
+                        <img src="images/stand-pecan.jpg" alt="" width="792" height="792" loading="lazy" decoding="async" data-stand-lazy>
+                      </picture>
+                    </div>
+                  </div>
+                  <button type="button" class="cake-slice" data-cake="Pecan &amp; honey tart" aria-label="Order Pecan and honey tart">
+                    <div class="cake-spin">
+                      <picture>
+                        <source type="image/webp" srcset="images/stand-pecan.webp">
+                        <img src="images/stand-pecan.jpg" alt="" width="792" height="792" loading="lazy" decoding="async" data-stand-lazy>
+                      </picture>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <button type="button" class="slice-label" id="slice-label" data-cake="Lemon tart" aria-label="Order Lemon tart">
+                <span class="slice-label-eyebrow">Signature</span>
+                <span class="slice-label-name" id="slice-label-name">Lemon tart</span>
+              </button>
+            </div>
+          </div>
+          <div class="cake-controls">
+            <button type="button" class="cake-nav-btn" id="cake-prev" aria-label="Previous signature">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="cake-dots" role="tablist" aria-label="Signatures">
+              <button type="button" class="cake-dot" role="tab" aria-label="Lemon tart" aria-current="true" data-index="0"></button>
+              <button type="button" class="cake-dot" role="tab" aria-label="Black Forest" data-index="1"></button>
+              <button type="button" class="cake-dot" role="tab" aria-label="Pecan and honey tart" data-index="2"></button>
+            </div>
+            <button type="button" class="cake-nav-btn" id="cake-next" aria-label="Next signature">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <p class="cake-sr" id="cake-live" aria-live="polite">Showing Lemon tart</p>
         </div>
       </div>
     </section>
@@ -1443,6 +1755,23 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
 
     // Cake picks
     const pickCards = Array.from(document.querySelectorAll('.pick-card'));
+    function selectCakeByName(name) {
+      const card = pickCards.find(function (c) { return c.getAttribute('data-cake') === name; });
+      if (!card) return;
+      pickCards.forEach(function (c) { c.setAttribute('aria-checked', 'false'); });
+      card.setAttribute('aria-checked', 'true');
+      state.cake = name;
+      const err = document.getElementById('cake-error');
+      if (err) err.style.display = 'none';
+      if (typeof showStep === 'function') showStep(1);
+      const order = document.getElementById('order');
+      if (order) {
+        const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        try { history.replaceState(null, '', '#order'); } catch (err) {}
+        order.scrollIntoView({ behavior: prefersReduce ? 'auto' : 'smooth', block: 'start' });
+      }
+    }
+
     pickCards.forEach(function (card, idx) {
       card.addEventListener('click', function () {
         pickCards.forEach((c) => c.setAttribute('aria-checked', 'false'));
@@ -1601,8 +1930,179 @@ Images: lemon-tart.jpg, black-forest.jpg, carrot-cake.jpg, pecan-honey-tart.jpg,
       }
     });
 
+    window.selectCakeByName = selectCakeByName;
+
     showStep(1);
   })();
+
+    /* ---- Cake stand hero ---- */
+    (function initCakeStand() {
+      const stand = document.getElementById('cake-stand');
+      if (!stand) return;
+      const layers = Array.from(stand.querySelectorAll('.cake-layer'));
+      const dots = Array.from(stand.querySelectorAll('.cake-dot'));
+      const labelBtn = document.getElementById('slice-label');
+      const labelName = document.getElementById('slice-label-name');
+      const live = document.getElementById('cake-live');
+      const plate = document.getElementById('cake-plate');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const cakes = layers.map(function (l) { return l.getAttribute('data-cake'); });
+      let index = 0;
+      let autoTimer = null;
+      let rot = 0;
+
+      function setRot(deg) {
+        rot = deg;
+        stand.style.setProperty('--cake-rot', deg + 'deg');
+      }
+
+      function show(i, opts) {
+        opts = opts || {};
+        index = (i + cakes.length) % cakes.length;
+        stand.dataset.index = String(index);
+        layers.forEach(function (layer, li) {
+          const on = li === index;
+          layer.classList.toggle('is-active', on);
+          if (on) layer.removeAttribute('hidden');
+          else layer.setAttribute('hidden', '');
+        });
+        dots.forEach(function (d, di) {
+          d.setAttribute('aria-current', di === index ? 'true' : 'false');
+        });
+        const name = cakes[index];
+        labelName.textContent = name;
+        labelBtn.setAttribute('data-cake', name);
+        labelBtn.setAttribute('aria-label', 'Order ' + name);
+        if (live) live.textContent = 'Showing ' + name;
+        stand.querySelectorAll('.cake-slice').forEach(function (btn) {
+          btn.setAttribute('aria-label', 'Order ' + btn.getAttribute('data-cake'));
+        });
+        // Nudge rotation on change
+        if (!reduceMotion && !opts.skipRot) setRot(rot + 45);
+        // Ensure sliced state
+        if (reduceMotion) {
+          stand.classList.add('is-sliced');
+          stand.classList.remove('is-spinning');
+        } else {
+          stand.classList.remove('is-sliced');
+          // force reflow then slice out
+          void stand.offsetWidth;
+          requestAnimationFrame(function () {
+            stand.classList.add('is-sliced');
+          });
+        }
+      }
+
+      function next(dir) {
+        show(index + (dir || 1));
+        restartAuto();
+      }
+
+      function restartAuto() {
+        if (autoTimer) clearInterval(autoTimer);
+        if (reduceMotion) return;
+        autoTimer = setInterval(function () { show(index + 1); }, 5600);
+      }
+
+      document.getElementById('cake-prev').addEventListener('click', function () { next(-1); });
+      document.getElementById('cake-next').addEventListener('click', function () { next(1); });
+      dots.forEach(function (d) {
+        d.addEventListener('click', function () {
+          show(Number(d.getAttribute('data-index')));
+          restartAuto();
+        });
+      });
+
+      function goOrder(name) {
+        if (typeof window.selectCakeByName === 'function') window.selectCakeByName(name);
+      }
+      labelBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        goOrder(labelBtn.getAttribute('data-cake'));
+      });
+
+      // Drag to rotate; click (without drag) orders the active signature
+      let dragging = false;
+      let didDrag = false;
+      let lastX = 0;
+      let downX = 0;
+      function onDown(clientX) {
+        dragging = true;
+        didDrag = false;
+        lastX = clientX;
+        downX = clientX;
+        stand.classList.add('is-dragging');
+        stand.classList.remove('is-spinning');
+        if (autoTimer) clearInterval(autoTimer);
+      }
+      function onMove(clientX) {
+        if (!dragging) return;
+        const dx = clientX - lastX;
+        lastX = clientX;
+        if (Math.abs(clientX - downX) > 6) didDrag = true;
+        setRot(rot + dx * 0.45);
+      }
+      function onUp(e) {
+        if (!dragging) return;
+        dragging = false;
+        stand.classList.remove('is-dragging');
+        if (!reduceMotion) {
+          stand.classList.add('is-spinning');
+          restartAuto();
+        }
+        if (!didDrag) {
+          const active = stand.querySelector('.cake-layer.is-active');
+          if (active && !e.target.closest('.slice-label')) {
+            goOrder(active.getAttribute('data-cake'));
+          }
+        }
+      }
+      plate.addEventListener('pointerdown', function (e) {
+        if (e.button && e.button !== 0) return;
+        if (e.target.closest('.slice-label')) return;
+        plate.setPointerCapture(e.pointerId);
+        onDown(e.clientX);
+      });
+      plate.addEventListener('pointermove', function (e) { onMove(e.clientX); });
+      plate.addEventListener('pointerup', onUp);
+      plate.addEventListener('pointercancel', onUp);
+
+      // Scroll-linked gentle rotation while hero in view
+      if (!reduceMotion) {
+        let ticking = false;
+        window.addEventListener('scroll', function () {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(function () {
+            ticking = false;
+            const rect = stand.getBoundingClientRect();
+            const vh = window.innerHeight || 800;
+            if (rect.bottom < 0 || rect.top > vh) return;
+            const progress = 1 - Math.min(1, Math.max(0, rect.top / vh));
+            // subtle extra rotation from scroll (does not fight idle spin base)
+            stand.style.setProperty('--cake-rot', (rot + progress * 28) + 'deg');
+          });
+        }, { passive: true });
+      }
+
+      // Keyboard on carousel
+      stand.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); next(-1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); next(1); }
+      });
+
+      // Init
+      if (reduceMotion) {
+        stand.classList.add('is-sliced');
+        stand.classList.remove('is-spinning');
+      } else {
+        stand.classList.add('is-sliced');
+        stand.classList.add('is-spinning');
+        restartAuto();
+      }
+      show(0, { skipRot: true });
+    })();
+
   </script>
 </body>
 </html>

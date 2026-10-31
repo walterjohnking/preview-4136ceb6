@@ -45,5 +45,47 @@
     "note": "Wikimedia Commons \u2014 pain au chocolat, Luc Viatour (fills missing caf\u00e9-photo-b)",
     "pixels": "1600x1107",
     "bytes": 332909
+  },
+  "stand-lemon.webp": {
+    "url": "https://commons.wikimedia.org/wiki/File:Tarte_au_citron_-_Meudon_-_France.jpg",
+    "license": "CC BY-SA 4.0",
+    "note": "Top-down whole lemon tart for cake-stand hero",
+    "format": "webp",
+    "bytes": 59852
+  },
+  "stand-lemon.jpg": {
+    "url": "https://commons.wikimedia.org/wiki/File:Tarte_au_citron_-_Meudon_-_France.jpg",
+    "license": "CC BY-SA 4.0",
+    "note": "Top-down whole lemon tart for cake-stand hero (JPEG fallback)",
+    "format": "jpeg",
+    "bytes": 114852
+  },
+  "stand-black-forest.webp": {
+    "url": "https://commons.wikimedia.org/wiki/File:Black_Forest_cake_5.jpg",
+    "license": "CC BY-SA 3.0",
+    "note": "Near top-down Black Forest for cake-stand hero",
+    "format": "webp",
+    "bytes": 81186
+  },
+  "stand-black-forest.jpg": {
+    "url": "https://commons.wikimedia.org/wiki/File:Black_Forest_cake_5.jpg",
+    "license": "CC BY-SA 3.0",
+    "note": "Near top-down Black Forest for cake-stand hero (JPEG fallback)",
+    "format": "jpeg",
+    "bytes": 114072
+  },
+  "stand-pecan.webp": {
+    "url": "https://commons.wikimedia.org/wiki/File:Pecan_Pie_on_blue_plate.jpg",
+    "license": "CC0",
+    "note": "Top-down pecan tart for cake-stand hero",
+    "format": "webp",
+    "bytes": 117442
+  },
+  "stand-pecan.jpg": {
+    "url": "https://commons.wikimedia.org/wiki/File:Pecan_Pie_on_blue_plate.jpg",
+    "license": "CC0",
+    "note": "Top-down pecan tart for cake-stand hero (JPEG fallback)",
+    "format": "jpeg",
+    "bytes": 117862
   }
 }
