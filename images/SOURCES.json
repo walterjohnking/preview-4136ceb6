@@ -1,0 +1,49 @@
+{
+  "black-forest.jpg": {
+    "url": "https://www.instagram.com/babkafitzroy/p/C-O3D3vTfpz/",
+    "note": "Official @babkafitzroy Black Forest cake post"
+  },
+  "shopfront.jpg": {
+    "url": "https://www.instagram.com/p/DbezuWTDybC/",
+    "note": "Official @babkafitzroy Brunswick St shopfront"
+  },
+  "lemon-tart.jpg": {
+    "url": "https://commons.wikimedia.org/wiki/File:Lemon_tart_dusted_with_powdered_sugar_at_a_restaurant.jpg",
+    "license": "CC BY 2.0",
+    "note": "Wikimedia Commons \u2014 lemon tart slice dusted with powdered sugar (replaces acrylic-stack Babka crop Walter rejected)",
+    "pixels": "1600x1280",
+    "bytes": 205541
+  },
+  "pecan-honey-tart.jpg": {
+    "url": "https://www.instagram.com/p/C8wGqivyPF9/",
+    "note": "Crop of pecan/honey tart from official @babkafitzroy cakes display"
+  },
+  "carrot-cake.jpg": {
+    "url": "https://commons.wikimedia.org/wiki/File:Carrot_cake_-_Milfey_Patisserie_2026-04-04.jpg",
+    "license": "CC0",
+    "note": "Wikimedia Commons CC0 \u2014 clear frosted carrot cake slice (replaces ambiguous Babka display crop that read as oat fallback)",
+    "pixels": "1600x1205",
+    "bytes": 225711
+  },
+  "almond-croissant.jpg": {
+    "url": "https://commons.wikimedia.org/wiki/File:Almond_croissant_-_Milfey_Patisserie_2026-07-11.jpg",
+    "license": "CC0",
+    "note": "Wikimedia Commons CC0 \u2014 almond croissant no hand (replaces Babka reel frame with hand)",
+    "pixels": "1600x1205",
+    "bytes": 212837
+  },
+  "danishes.jpg": {
+    "url": "https://commons.wikimedia.org/wiki/File:Glazed_apple_Danish.jpg",
+    "license": "CC BY-SA 3.0",
+    "note": "Wikimedia Commons \u2014 glazed apple/apricot Danish (file for menu; not currently wired to <img>)",
+    "pixels": "1280x960",
+    "bytes": 154219
+  },
+  "chocolate-croissant.jpg": {
+    "url": "https://commons.wikimedia.org/wiki/File:Pain_au_chocolat_Luc_Viatour.jpg",
+    "license": "CC BY-SA 3.0",
+    "note": "Wikimedia Commons \u2014 pain au chocolat, Luc Viatour (fills missing caf\u00e9-photo-b)",
+    "pixels": "1600x1107",
+    "bytes": 332909
+  }
+}
