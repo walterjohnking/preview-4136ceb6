@@ -46,46 +46,112 @@
     "pixels": "1600x1107",
     "bytes": 332909
   },
-  "stand-lemon.webp": {
-    "url": "https://commons.wikimedia.org/wiki/File:Tarte_au_citron_-_Meudon_-_France.jpg",
-    "license": "CC BY-SA 4.0",
-    "note": "Top-down whole lemon tart for cake-stand hero",
+  "stand-lemon-whole.webp": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "Plain glossy lemon tart 3/4 with wedge gap (no fruit garnish); rembg cutout for cake-stand hero",
+    "license": "generated-for-this-pitch",
     "format": "webp",
-    "bytes": 59852
+    "bytes": 29526
   },
-  "stand-lemon.jpg": {
-    "url": "https://commons.wikimedia.org/wiki/File:Tarte_au_citron_-_Meudon_-_France.jpg",
-    "license": "CC BY-SA 4.0",
-    "note": "Top-down whole lemon tart for cake-stand hero (JPEG fallback)",
+  "stand-lemon-whole.jpg": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "JPEG fallback of stand-lemon-whole",
     "format": "jpeg",
-    "bytes": 114852
+    "bytes": 51858
   },
-  "stand-black-forest.webp": {
-    "url": "https://commons.wikimedia.org/wiki/File:Black_Forest_cake_5.jpg",
-    "license": "CC BY-SA 3.0",
-    "note": "Near top-down Black Forest for cake-stand hero",
+  "stand-lemon-slice.webp": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "Matching lemon tart slice cutout for slice-out choreography",
+    "license": "generated-for-this-pitch",
     "format": "webp",
-    "bytes": 81186
+    "bytes": 11126
   },
-  "stand-black-forest.jpg": {
-    "url": "https://commons.wikimedia.org/wiki/File:Black_Forest_cake_5.jpg",
-    "license": "CC BY-SA 3.0",
-    "note": "Near top-down Black Forest for cake-stand hero (JPEG fallback)",
+  "stand-lemon-slice.jpg": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "JPEG fallback of stand-lemon-slice",
     "format": "jpeg",
-    "bytes": 114072
+    "bytes": 18968
   },
-  "stand-pecan.webp": {
-    "url": "https://commons.wikimedia.org/wiki/File:Pecan_Pie_on_blue_plate.jpg",
-    "license": "CC0",
-    "note": "Top-down pecan tart for cake-stand hero",
+  "stand-pecan-whole.webp": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "Pecan & honey tart 3/4 with gap; rembg cutout",
+    "license": "generated-for-this-pitch",
     "format": "webp",
-    "bytes": 117442
+    "bytes": 79080
   },
-  "stand-pecan.jpg": {
-    "url": "https://commons.wikimedia.org/wiki/File:Pecan_Pie_on_blue_plate.jpg",
-    "license": "CC0",
-    "note": "Top-down pecan tart for cake-stand hero (JPEG fallback)",
+  "stand-pecan-whole.jpg": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "JPEG fallback",
     "format": "jpeg",
-    "bytes": 117862
+    "bytes": 118295
+  },
+  "stand-pecan-slice.webp": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "Matching pecan slice cutout",
+    "license": "generated-for-this-pitch",
+    "format": "webp",
+    "bytes": 35920
+  },
+  "stand-pecan-slice.jpg": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "JPEG fallback",
+    "format": "jpeg",
+    "bytes": 48632
+  },
+  "stand-bf-whole.webp": {
+    "source": "composite",
+    "note": "Black Forest whole-with-gap cutout for cake-stand hero (rembg; defringed v6)",
+    "format": "webp",
+    "bytes": 67184,
+    "related": "black-forest.jpg Instagram source for look reference"
+  },
+  "stand-bf-whole.jpg": {
+    "source": "composite",
+    "note": "JPEG fallback",
+    "format": "jpeg",
+    "bytes": 110623
+  },
+  "stand-bf-slice.webp": {
+    "source": "composite",
+    "note": "Black Forest slice cutout for slice-out",
+    "format": "webp",
+    "bytes": 49222
+  },
+  "stand-bf-slice.jpg": {
+    "source": "composite",
+    "note": "JPEG fallback",
+    "format": "jpeg",
+    "bytes": 62441
+  },
+  "stand-pedestal.webp": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "Matte ceramic cake pedestal 3/4 on cream; photoreal stand under cakes",
+    "license": "generated-for-this-pitch",
+    "format": "webp",
+    "bytes": 20936
+  },
+  "stand-pedestal.jpg": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "JPEG fallback",
+    "format": "jpeg",
+    "bytes": 27318
+  },
+  "stand-lemon-intact.webp": {
+    "source": "generated",
+    "tool": "Cursor GenerateImage + rembg",
+    "note": "Intact lemon tart (unused in final hero; whole-with-gap preferred)",
+    "license": "generated-for-this-pitch",
+    "format": "webp",
+    "bytes": 29966
   }
 }
